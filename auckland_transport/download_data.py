@@ -63,7 +63,7 @@ def convert_request_to_df(data: dict) -> pd.DataFrame:
                 'stop_uncertainty': e['trip_update']['stop_time_update']['arrival']['uncertainty'],
                 'stop_sequence': e['trip_update']['stop_time_update']['stop_sequence'],
                 'vehicle_id': e['trip_update']['vehicle']['id'],
-                'vehicle_licence_plate': e['trip_update']['vehicle']['license_plate'],
+                'vehicle_license_plate': e['trip_update']['vehicle']['license_plate'],
                 'trip_delay': e['trip_update']['delay'],
                 'timestamp': e['trip_update']['timestamp'],
             }

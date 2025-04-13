@@ -113,9 +113,9 @@ def test_convert_request_to_df():
             "route_id": ["AIR-221", "RBW-402"],
             "direction_id": [0, 0],
             "stop_sequence": [24, 17],
-            "arrival_delay": [1642, -499],
-            "arrival_time": [1744482442, 1744483481],
-            "arrival_uncertainty": [0, 0],
+            "stop_delay": [1642, -499],
+            "stop_time": [1744482442, 1744483481],
+            "stop_uncertainty": [0, 0],
             "stop_id": ["1808-0d9a1f7f", "7016-875f30cb"],
             "vehicle_id": ["26008", "23633"],
             "vehicle_license_plate": ["NFS279", "KPK176"],
@@ -125,7 +125,6 @@ def test_convert_request_to_df():
     input = json.loads(input)['response']
     expected = pd.DataFrame(expected)
     df = download_data.convert_request_to_df(input)
-    print(df)
-#    assert df.equals(expected)
+    pd.testing.assert_frame_equal(df.sort_index(axis=1), expected.sort_index(axis=1))
     assert len(df.index) == 2
 

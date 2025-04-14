@@ -2,6 +2,7 @@ from collections import defaultdict
 import pandas as pd
 import requests
 import os
+import uuid
 
 from trip_update import TripUpdate
 
@@ -52,9 +53,7 @@ def convert_request_to_trip_update(data: dict) -> TripUpdate:
     for e in entities:
         try:
             row = {
-                'id': e['trip_update']['trip']['route_id'] + '_' + e['trip_update']['vehicle']['id'] + '_' + \
-                      str(e['trip_update']['trip']['direction_id']) + '_' + \
-                      e['trip_update']['stop_time_update']['stop_id'] + '_' + str(e['trip_update']['timestamp']),
+                'id': uuid.uuid4(),
                 'trip_id': e['trip_update']['trip']['trip_id'],
                 'route_id': e['trip_update']['trip']['route_id'],
                 'direction_id': e['trip_update']['trip']['direction_id'],

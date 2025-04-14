@@ -12,17 +12,17 @@ class TripUpdate(Base):
 
     id: Mapped[str] = mapped_column(primary_key=True)
     trip_id: Mapped[str] = mapped_column(String(45))
-    route_id: Mapped[str] = mapped_column(String(8))
+    route_id: Mapped[str] = mapped_column(String(10))
     direction_id: Mapped[int]
-    start_time: Mapped[str] = mapped_column(String(8))
+    start_time: Mapped[str] = mapped_column(String(12))
     start_date: Mapped[str] = mapped_column(String(8))
     stop_id: Mapped[str] = mapped_column(String(13))
     stop_time: Mapped[int] = mapped_column(BigInteger)
     stop_delay: Mapped[int]
     stop_uncertainty: Mapped[int]
     stop_sequence: Mapped[int]
-    vehicle_id: Mapped[str] = mapped_column(String(5))
-    vehicle_license_plate: Mapped[str] = mapped_column(String(6))
+    vehicle_id: Mapped[str] = mapped_column(String(10))
+    vehicle_license_plate: Mapped[str] = mapped_column(String(11))
     trip_delay: Mapped[int]
     timestamp: Mapped[int] = mapped_column(BigInteger)
 

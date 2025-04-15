@@ -4,7 +4,7 @@ import requests
 import os
 import uuid
 
-from trip_update import TripUpdate
+from auckland_transport.trip_update import TripUpdate
 
 
 def make_realtime_request() -> dict:

@@ -1,6 +1,6 @@
 import datetime
-from auckland_transport.database_base import Base
-import auckland_transport.database_actions as database_actions
+from database_base import Base
+import database_actions as database_actions
 from sqlalchemy import String, Date, BigInteger
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column

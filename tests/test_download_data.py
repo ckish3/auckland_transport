@@ -2,8 +2,8 @@
 import json
 import pandas as pd
 
-import auckland_transport.download_data as download_data
-import auckland_transport.trip_update as trip_update
+import download_data as download_data
+import trip_update as trip_update
 
 def test_convert_request_to_trip_update():
     input = """

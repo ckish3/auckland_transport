@@ -1,6 +1,7 @@
 import os
 from sqlalchemy.orm import Session
 import logging
+import time
 
 import download_data
 import database_actions
@@ -34,6 +35,11 @@ def main():
         session.commit()
 
 
+def loop():
+    while True:
+        main()
+        time.sleep(20*60)
+
 
 if __name__ == "__main__":
-    main()
+    loop()

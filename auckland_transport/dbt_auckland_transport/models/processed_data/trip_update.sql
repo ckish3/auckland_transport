@@ -1,3 +1,5 @@
+-- This table is the last estimate for a stop on a trip
+
 WITH
 
 latest_updates AS (

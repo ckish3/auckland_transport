@@ -1,3 +1,4 @@
+-- This table adds columns of transformations of the response time (hour, day of the week, etc.)
 
 SELECT
     *,

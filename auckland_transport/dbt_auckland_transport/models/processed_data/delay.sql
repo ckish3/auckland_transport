@@ -1,3 +1,6 @@
+-- This table adds transformations of the delay estimates. It converts the delay in seconds to
+--minutes, and categorises the delay as early, on time, 5-10 minutes late, or 10+ minutes late
+
 SELECT
     *,
     stop_delay / 60.0 as minutes_delay,

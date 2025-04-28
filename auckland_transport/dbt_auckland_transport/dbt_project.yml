@@ -38,3 +38,8 @@ models:
     processed_data:
       +materialized: table
       schema: processed_data
+
+    dashboard:
+      +materialized: table
+      schema: dashboard
+

@@ -9,7 +9,7 @@ WITH route_avg as (
         stop_id,
         day_type,
         response_hour,
-        AVG(stop_delay) as avg_delay
+        AVG(minutes_delay) as avg_delay
     FROM {{ ref('latest_data') }}
     GROUP BY route_id, direction_id, stop_id, day_type, response_hour
     ),
@@ -22,7 +22,7 @@ WITH route_avg as (
             day_type,
             response_hour,
             vehicle_id,
-            AVG(stop_delay) as avg_delay
+            AVG(minutes_delay) as avg_delay
         FROM {{ ref('latest_data') }}
         GROUP BY route_id, direction_id, stop_id, day_type, response_hour, vehicle_id
     ),

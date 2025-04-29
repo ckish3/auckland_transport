@@ -6,7 +6,7 @@ WITH trip_delay as (
         route_id,
         start_time,
         direction_id,
-        MAX(stop_delay) as max_delay
+        MAX(minutes_delay) as max_delay
 
     FROM {{ ref('latest_data') }}
     GROUP BY route_id, start_time, direction_id

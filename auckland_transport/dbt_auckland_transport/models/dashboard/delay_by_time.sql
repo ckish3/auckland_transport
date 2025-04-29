@@ -3,7 +3,7 @@
 WITH weekday_avg as (
     SELECT
         response_hour,
-        AVG(stop_delay) as avg_delay
+        percentile_disc(0.5) within group (order by minutes_delay) as avg_delay
     FROM {{ ref('latest_data') }}
     WHERE day_type = 'weekday'
     GROUP BY response_hour
@@ -11,14 +11,14 @@ WITH weekday_avg as (
     weekend_avg as (
     SELECT
         response_hour,
-        AVG(stop_delay) as avg_delay
+        percentile_disc(0.5) within group (order by minutes_delay) as avg_delay
     FROM {{ ref('latest_data') }}
     WHERE day_type = 'weekend'
     GROUP BY response_hour
     )
 
 SELECT
-    w.response_hour,
+    w.response_hour::INT as response_hour,
     w.avg_delay as weekday_avg,
     e.avg_delay as weekend_avg
 FROM weekday_avg w

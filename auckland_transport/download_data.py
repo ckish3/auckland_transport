@@ -1,8 +1,10 @@
 from collections import defaultdict
-
 import pandas as pd
 import requests
 import os
+import uuid
+
+from trip_update import TripUpdate
 
 
 def make_realtime_request() -> dict:
@@ -34,24 +36,24 @@ def make_realtime_request() -> dict:
 
 
 
-def convert_request_to_df(data: dict) -> pd.DataFrame:
+def convert_request_to_trip_update(data: dict) -> TripUpdate:
     """
-    Convert the real-time data from the Auckland Transport API into a pandas
-    DataFrame.
+    Convert the real-time data from the Auckland Transport API into a TripUpdate object.
 
     Args:
         data (dict): The real-time data from the Auckland Transport API.
 
     Returns:
-        pd.DataFrame: The real-time data in a pandas DataFrame.
+        TripUpdate: The real-time data in a TripUpdate object.
     """
 
     entities = data['entity']
-    formatted_dict = defaultdict(list)
+    trip_updates = []
 
     for e in entities:
         try:
             row = {
+                'id': uuid.uuid4(),
                 'trip_id': e['trip_update']['trip']['trip_id'],
                 'route_id': e['trip_update']['trip']['route_id'],
                 'direction_id': e['trip_update']['trip']['direction_id'],
@@ -68,12 +70,10 @@ def convert_request_to_df(data: dict) -> pd.DataFrame:
                 'timestamp': e['trip_update']['timestamp'],
             }
 
-            for k, v in row.items():
-                formatted_dict[k].append(v)
-
+            trip_update = TripUpdate(**row)
+            trip_updates.append(trip_update)
         except KeyError as e:
             print(f"Error: {e}")
             continue
 
-    df = pd.DataFrame(formatted_dict)
-    return df
+    return trip_updates

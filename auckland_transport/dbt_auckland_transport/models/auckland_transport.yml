@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: raw_data # this is the source_name
+    database: postgres
+    schema: raw_data
+
+    tables:
+      - name: trip_update

@@ -2,9 +2,10 @@
 import json
 import pandas as pd
 
-import auckland_transport.download_data as download_data
+import download_data as download_data
+import trip_update as trip_update
 
-def test_convert_request_to_df():
+def test_convert_request_to_trip_update():
     input = """
     {"response": {
         "header": {
@@ -106,26 +107,50 @@ def test_convert_request_to_df():
     }
 }"""
 
-    expected = {
-            "trip_id": ["1397-38017-18600-2-1c8a525c", "1021-11147-19560-2-4ce78e52"],
-            "start_time": ["05:10:00", "05:26:00"],
-            "start_date": ["20250413", "20250413"],
-            "route_id": ["AIR-221", "RBW-402"],
-            "direction_id": [0, 0],
-            "stop_sequence": [24, 17],
-            "arrival_delay": [1642, -499],
-            "arrival_time": [1744482442, 1744483481],
-            "arrival_uncertainty": [0, 0],
-            "stop_id": ["1808-0d9a1f7f", "7016-875f30cb"],
-            "vehicle_id": ["26008", "23633"],
-            "vehicle_license_plate": ["NFS279", "KPK176"],
-            "timestamp": [1744482459, 1744484818],
-            "trip_delay": [1642, -499]
-        }
+    expected = [{
+            "trip_id": "1397-38017-18600-2-1c8a525c",
+            "start_time": "05:10:00",
+            "start_date": "20250413",
+            "route_id": "AIR-221",
+            "direction_id": 0,
+            "stop_sequence": 24,
+            "stop_delay": 1642,
+            "stop_time": 1744482442,
+            "stop_uncertainty": 0,
+            "stop_id": "1808-0d9a1f7f",
+            "vehicle_id": "26008",
+            "vehicle_license_plate": "NFS279",
+            "timestamp": 1744482459,
+            "trip_delay": 1642
+        },
+        {
+            "trip_id": "1021-11147-19560-2-4ce78e52",
+            "start_time": "05:26:00",
+            "start_date": "20250413",
+            "route_id": "RBW-402",
+            "direction_id": 0,
+            "stop_sequence": 17,
+            "stop_delay": -499,
+            "stop_time": 1744483481,
+            "stop_uncertainty": 0,
+            "stop_id": "7016-875f30cb",
+            "vehicle_id": "23633",
+            "vehicle_license_plate": "KPK176",
+            "timestamp": 1744484818,
+            "trip_delay": -499
+        }]
     input = json.loads(input)['response']
-    expected = pd.DataFrame(expected)
-    df = download_data.convert_request_to_df(input)
-    print(df)
-#    assert df.equals(expected)
-    assert len(df.index) == 2
+    actual = download_data.convert_request_to_trip_update(input)
+    assert len(actual) == len(expected)
+
+    for i in range(len(actual)):
+        expected_item = trip_update.TripUpdate(**expected[i])
+        print(expected_item)
+        print(actual[i])
+        print(expected_item == actual[i])
+        assert expected_item == actual[i]
+
+
+if __name__ == "__main__":
+    test_convert_request_to_trip_update()
 

@@ -1,3 +1,4 @@
+--Tests that the trip_update table has just 1 entry per trip and stop
 
 with count_rows as (
     SELECT

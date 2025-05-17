@@ -31,6 +31,9 @@ def main():
 
         trip_updates = download_data.convert_request_to_trip_update(data)
         logger.info(f'Adding {len(trip_updates)} trip updates to database')
+
+        if len(trip_updates) == 0:
+            logger.warning('No trip updates found, skipping')
         session.add_all(trip_updates)
         session.commit()
 

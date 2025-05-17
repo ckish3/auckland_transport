@@ -3,8 +3,20 @@ import pandas as pd
 import requests
 import os
 import uuid
+import logging
 
 from trip_update import TripUpdate
+
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[
+        logging.StreamHandler()
+    ]
+)
+
+logger = logging.getLogger(__name__)
 
 
 def make_realtime_request() -> dict:
@@ -73,7 +85,7 @@ def convert_request_to_trip_update(data: dict) -> TripUpdate:
             trip_update = TripUpdate(**row)
             trip_updates.append(trip_update)
         except KeyError as e:
-            print(f"Error: {e}")
+            logger.info(f"Error downloading data: {e}")
             continue
 
     return trip_updates

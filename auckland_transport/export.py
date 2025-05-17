@@ -6,6 +6,18 @@ import sqlalchemy
 import os
 import pandas as pd
 import database_actions
+import logging
+
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[
+        logging.StreamHandler()
+    ]
+)
+
+logger = logging.getLogger(__name__)
 
 
 def export_data(engine: sqlalchemy.engine.base.Engine, folder: str):
@@ -31,6 +43,7 @@ def export_data(engine: sqlalchemy.engine.base.Engine, folder: str):
             query = f"SELECT * FROM {schema}.{t}"
             file = f"{folder}/{t}.csv"
             df = pd.read_sql(query, conn)
+            logger.info(f"Exporting {t} to {file}")
             df.to_csv(file, index=False)
 
 def main():
